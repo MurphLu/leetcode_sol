@@ -17,8 +17,8 @@ public class MinimumSteps {
     public long minimumSteps(String s) {
         long cnt = 0;
         long cntOne = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+        char[] cs = s.toCharArray();
+        for (char c: cs) {
             if (c == '1') {
                 cntOne++;
             }
