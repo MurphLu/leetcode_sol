@@ -11,9 +11,7 @@ public class MaxCoins {
         }
         int[] newNums = new int[n + 2];
         newNums[0] = 1;
-        for (int i = 0; i < nums.length; i++) {
-            newNums[i+1] = nums[i];
-        }
+        System.arraycopy(nums, 0, newNums, 1, nums.length);
         newNums[n+1] = 1;
         return maxCoin(newNums, 0, n + 1, dp);
     }
