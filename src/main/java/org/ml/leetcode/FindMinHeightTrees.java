@@ -19,22 +19,22 @@ import java.util.*;
 public class FindMinHeightTrees {
     static class Node{
         int val;
-        Map<Integer, Node> children;
+        Set<Node> children;
 
         public Node(int val) {
             this.val = val;
-            children = new HashMap<>();
+            children = new HashSet<>();
         }
 
         public int outSize() {
             return children.size();
         }
         public void addChild(Node child) {
-            children.put(child.val, child);
+            children.add(child);
         }
         public Node deleteSelfFromTree() {
             if (children.size() == 1) {
-                for(Node child: children.values()) {
+                for(Node child: children) {
                     child.deleteNode(this);
                     if (child.outSize() == 1) {
                         return child;
@@ -45,7 +45,7 @@ public class FindMinHeightTrees {
         }
 
         private void deleteNode(Node node) {
-            children.remove(node.val);
+            children.remove(node);
         }
     }
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
