@@ -9,7 +9,7 @@ public class IsScramble {
         boolean scramble = new IsScramble().isScramble("eebaacbcbcadaaedceaaacadccd", "eadcaacabaddaceacbceaabeccd");
         System.out.println(scramble);
     }
-    // 递归 + 记忆话搜索
+    // 递归 + 记忆化搜索
     public boolean isScramble(String s1, String s2) {
         if (map.containsKey(s1+s2)) {
             return map.get(s1+s2);
