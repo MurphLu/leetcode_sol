@@ -54,6 +54,8 @@ public class MaxScore {
             maxEvenTo = isOdd ? Math.max(num - x, 0) : num;
             maxOddTo = isOdd ? num : Math.max(num - x, 0);
         } else {
+            // 如果当前值与其前一个值符号相同，那么当前值一定要包含，则直接取当前值 + 下一个值相同符号能获得的最大值
+            // 如果当前值与前一个值符号不同，则需要判断 取当前值 -x，与不取当前值哪个更大，取更大的一个
             maxEvenTo =  isOdd ? Math.max(num-x+next.maxOddTo, next.maxEvenTo) : num + next.maxEvenTo;
             maxOddTo = isOdd ? num + next.maxOddTo : Math.max(num - x + next.maxEvenTo, next.maxOddTo);
         }
