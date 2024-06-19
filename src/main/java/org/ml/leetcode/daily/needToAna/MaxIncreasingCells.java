@@ -24,11 +24,11 @@ public class MaxIncreasingCells {
     }
 
     public int maxIncreasingCells(int[][] mat) {
+        // 将矩阵中 key: val, val: List<int[]{col, row}> 加入红黑树
         var g = new TreeMap<Integer, List<int[]>>();
         int m = mat.length, n = mat[0].length;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                // 给定 Key，如果存在返回value，否则返回第二个参数function的结果。
                 g.computeIfAbsent(mat[i][j], k -> new ArrayList<>()).add(new int[]{i, j});
             }
         }
@@ -36,11 +36,15 @@ public class MaxIncreasingCells {
         int[] rowMax = new int[m], colMax = new int[n];
         for(var pos : g.values()){
             var mx = new int[pos.size()];
+            // 遍历红黑树中的坐标，并计算每个数所在的坐标位置能到达的最大值
             for(int i = 0; i < pos.size(); i++){
+                // 当前坐标所在 col，和 row 分别能得到的最大值是多少 +1 为当前点
                 mx[i] = Math.max(rowMax[pos.get(i)[0]], colMax[pos.get(i)[1]]) + 1;
+                // 结果为 mx 中最大的一个值
                 ans = Math.max(ans, mx[i]);
             }
             for(int k = 0; k < pos.size(); k++){
+                // 遍历当前值的所有点位，并更新到当前数字位置每个点所在的行与列分别能够到达的最大值
                 int i = pos.get(k)[0], j = pos.get(k)[1];
                 rowMax[i] = Math.max(rowMax[i], mx[k]);
                 colMax[j] = Math.max(colMax[j], mx[k]);
