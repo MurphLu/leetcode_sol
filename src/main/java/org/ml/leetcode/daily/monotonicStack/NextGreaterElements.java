@@ -1,4 +1,4 @@
-package org.ml.leetcode.daily;
+package org.ml.leetcode.daily.monotonicStack;
 
 import java.util.LinkedList;
 
