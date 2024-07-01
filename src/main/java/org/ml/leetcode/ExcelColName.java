@@ -18,4 +18,18 @@ public class ExcelColName {
         sb.reverse();
         return sb.toString();
     }
+
+    public int titleToNumber(String columnTitle) {
+        int idx = 0;
+        int p = 1;
+        int n = columnTitle.length() - 1;
+        int res = 0;
+        while (idx <= n) {
+            int i = columnTitle.charAt(n - idx) - 'A';
+            res += i*p;
+            p *=26;
+            idx++;
+        }
+        return res;
+    }
 }
