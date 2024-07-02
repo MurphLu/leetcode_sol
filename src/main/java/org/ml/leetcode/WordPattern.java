@@ -1,8 +1,11 @@
 package org.ml.leetcode;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+// pattern 中的字符需要与 s 种的单词一一对应
 public class WordPattern {
     public boolean wordPattern(String pattern, String s) {
         String[] sp = s.split(" ");
