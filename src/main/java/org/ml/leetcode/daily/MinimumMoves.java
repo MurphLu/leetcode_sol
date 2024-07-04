@@ -17,14 +17,87 @@ import java.util.List;
  *   然后交换它们的值（将 nums[y] = 1 和 nums[x] = 0）。
  *   如果 y == aliceIndex，在这次行动后 Alice 拾起一个 1 ，并且 nums[y] 变成 0 。
  * 返回 Alice 拾起 恰好 k 个 1 所需的 最少 行动次数。
+ *
+ * 2 <= n <= 10^5
+ * 0 <= nums[i] <= 1
+ * 1 <= k <= 10^5
+ * 0 <= maxChanges <= 10^5
+ * maxChanges + sum(nums) >= k
+ *
+ *
+ * 以下几种情况：
+ * k-3 不大于 maxChanges，且三个相邻的 1，，那么 相邻的三个 1 拿到需要的步数为 1+0+1，剩下的全部由 maxChanges 提供，每个两步 2+(k-3)*2L
+ * k-2 不大于 maxChanges，且有两个相邻的 1，那么 相邻的两个 1 拿到需要的步数为 0+1，剩下的全部由 maxChanges 提供，每个两步 1+(k-2)*2L
+ * k-1 不大于 maxChanges，如果数组中有 1，那么拿到该 1 的步数为 0，剩下的全部由 maxChanges 提供，（k-1）*2L
+ * 剩下的就从数组种拿 k - maxChanges 个 1，计算最小距离，最小距离其实就是找到队列的中间元素，计算每个元素到中间元素的距离，最终再加上 maxChanges*2 即得结果
+ *
  */
 public class MinimumMoves {
     public static void main(String[] args) {
         System.out.println(new MinimumMoves().minimumMoves(
-                new int[]{0,1,0,0,0,0,0,0},
-                2,2
+                new int[]{1,1,0,0,0,1,1,0,0,1},
+                3,1
         ));
     }
+
+    public long minimumMoves1(int[] nums, int k, int maxChanges) {
+        boolean hasConsThree = false;
+        boolean hasConsTwo = false;
+        boolean hasOne = false;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 1) {
+                hasOne = true;
+            }
+            if (i>0 && nums[i] == 1 && nums[i-1] == 1) {
+                hasConsTwo = true;
+            }
+            if(i>0 && i < nums.length - 1 && nums[i-1] == 1 && nums[i] == 1 && nums[i+1] ==1) {
+                hasConsThree = true;
+                break;
+            }
+        }
+
+        if (hasConsThree && k-3 <= maxChanges) {
+            return 2+(k-3)*2L;
+        }
+        if (hasConsTwo && k-2 <= maxChanges) {
+            return 1+(k-2)*2L;
+        }
+        if (hasOne && k-1 <= maxChanges) {
+            return (k-1)*2L;
+        }
+
+        LinkedList<Integer> left = new LinkedList<>();
+        LinkedList<Integer> right = new LinkedList<>();
+        int need = k-maxChanges;
+        long minStep = Long.MAX_VALUE;
+        long sumLeft = 0;
+        long sumRight = 0;
+        int idx = 0;
+        while (idx<nums.length) {
+            if(nums[idx] == 0){
+                continue;
+            }
+            if (left.size()+right.size() == need) {
+                minStep = Math.min( sumRight - (left.size() == right.size()?sumLeft : sumLeft-left.getLast()), minStep);
+                sumLeft-=left.removeFirst();
+            }
+            right.add(idx);
+            sumRight+=idx;
+
+            while (left.size() < right.size()) {
+                int r = right.removeFirst();
+                sumRight-=r;
+                left.add(r);
+                sumLeft+=r;
+            }
+            idx++;
+        }
+        return minStep + maxChanges*2L;
+    }
+
+
     public long minimumMoves(int[] nums, int k, int maxChanges) {
         int n = nums.length;
         long[] indexSum = new long[n + 1], sum = new long[n + 1];
