@@ -58,7 +58,7 @@ public class MinTime {
         if (cnt == 0 && !node.hasApple) {
             return 0;
         } else {
-            return cnt += 2;
+            return cnt + 2;
         }
     }
 }
