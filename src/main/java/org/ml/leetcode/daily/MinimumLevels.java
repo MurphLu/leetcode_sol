@@ -16,17 +16,17 @@ package org.ml.leetcode.daily;
  */
 public class MinimumLevels {
     public int minimumLevels(int[] possible) {
-        int total = 0;
+        int remain = 0;
         for (int p : possible) {
-            total += (p==1 ? p : -1);
+            remain += (p==1 ? p : -1);
         }
         int alice = 0;
         int aliceDone = 1;
         while (aliceDone <= possible.length) {
             int p = possible[aliceDone-1];
             alice += (p==1 ? p : -1);
-            total -= (p==1 ? p : -1);
-            if (alice > total){
+            remain -= (p==1 ? p : -1);
+            if (alice > remain){
                 break;
             }
             aliceDone++;
