@@ -55,25 +55,36 @@ public class SumOfPowers  {
         //递归入口 ， pre 和 min 取Integer.MAX_VALUE / 2 ，防止计算负数时溢出
         return (int) dfs(nums.length - 1 , k , Integer.MAX_VALUE / 2 , Integer.MAX_VALUE / 2 , nums);
     }
-    long dfs(int i , int rest , int pre , int min , int[] nums){
+
+    /**
+     *
+     * @param remain 遍历剩余
+     * @param restK 剩余未选
+     * @param pre 上一个所选数字
+     * @param min 最小差值绝对值
+     * @param nums 源数组
+     * @return
+     */
+    long dfs(int remain , int restK , int pre , int min , int[] nums){
         //当前剩余i + 1 个数字， 剩余数字小于还要选择的数字， 怎么选都不能够选出k个数 ， 返回0
-        if (i + 1 < rest){
+        if (remain + 1 < restK){
             return 0;
         }
         //选够了
-        if (rest == 0){
+        if (restK == 0){
             return min;
         }
         //把当前状态 映射为字符串
-        String key = i + "#" + rest + "#" + pre + "#" + min;
+        // 共剩余，剩余未选，上一个数字，选择上一个数字时最小差绝对值，如果当前状态满足相同的情况下，之后各种情况得到的最小差值也是相同的
+        String key = remain + "#" + restK + "#" + pre + "#" + min;
         //如果之前计算过
         if (memo.containsKey(key)){
             return memo.get(key);
         }
         //不选 当前元素
-        long res1 = dfs(i - 1, rest , pre , min , nums);
+        long res1 = dfs(remain - 1, restK , pre , min , nums);
         //选 当前元素
-        long res2 = dfs(i - 1 , rest - 1 , nums[i] , Math.min(min , pre - nums[i]) , nums);
+        long res2 = dfs(remain - 1 , restK - 1 , nums[remain] , Math.min(min , pre - nums[remain]) , nums);
         memo.put(key , (res1 + res2) % MOD);
         return (res1 + res2) % MOD;
     }
