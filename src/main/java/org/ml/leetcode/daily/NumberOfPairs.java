@@ -11,6 +11,7 @@ public class NumberOfPairs {
         );
     }
     public long numberOfPairs(int[] nums1, int[] nums2, int k) {
+
         Map<Integer, Integer> cnt = new HashMap<>();
         for (int x : nums1) {
             if (x % k != 0) {
