@@ -2,9 +2,7 @@ package org.ml.leetcode.daily;
 
 public class MinOperations {
     public static void main(String[] args) {
-        new MinOperations().minOperations(
-                new int[]{0,1,1,1,0,0}
-        );
+
     }
     public int minOperations(int[] nums) {
         int end = 3;
@@ -18,11 +16,7 @@ public class MinOperations {
                 step += 1;
                 int temp = start;
                 while (temp<end){
-                    if (nums[temp] == 1) {
-                        nums[temp] = 0;
-                    } else {
-                        nums[temp] = 1;
-                    }
+                    nums[temp] = nums[temp] == 1 ? 0 : 1;
                     temp++;
                 }
             }
