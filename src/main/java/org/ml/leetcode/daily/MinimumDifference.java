@@ -3,6 +3,8 @@ package org.ml.leetcode.daily;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 给你一个数组 nums 和一个整数 k 。你需要找到 nums 的一个 子数组 ，满足子数组中所有元素按位或运算 OR 的值与 k 的 绝对差 尽可能 小 。
@@ -22,6 +24,7 @@ public class MinimumDifference {
     }
 
     public int minimumDifference(int[] nums, int k) {
+    
         int n = nums.length;
         int[] bitsMaxPos = new int[31];
         Arrays.fill(bitsMaxPos, -1);
