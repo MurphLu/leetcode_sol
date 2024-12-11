@@ -8,6 +8,8 @@ public class NQueen {
     public static void main(String[] args) {
         List<List<String>> lists = new NQueen().solveNQueens(4);
         System.out.println(lists);
+        System.out.println(Math.round(1.5));
+
     }
     public List<List<String>> solveNQueens(int n) {
 
