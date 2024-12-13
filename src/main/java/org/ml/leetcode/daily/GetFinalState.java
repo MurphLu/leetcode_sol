@@ -1,6 +1,5 @@
 package org.ml.leetcode.daily;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
