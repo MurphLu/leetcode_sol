@@ -34,22 +34,17 @@ public class CloneGraph {
         Node[] nodes = new Node[100];
         Queue<Node> queue = new LinkedList<>();
         queue.add(node);
+        int count = 0;
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
             if (nodes[cur.val-1] != null) {
                 continue;
             }
             nodes[cur.val-1] = cur;
+            count++;
             queue.addAll(cur.neighbors);
         }
-        int count = 0;
-        for (Node n: nodes){
-            if (n!= null) {
-                count++;
-            } else {
-                break;
-            }
-        }
+
         Node[] clonedNodes = new Node[count+1];
         for (int i = 0; i < count; i++) {
             clonedNodes[i] = new Node(i + 1);
