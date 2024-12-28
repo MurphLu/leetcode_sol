@@ -25,14 +25,12 @@ public class IsPossibleSplit {
             if (idxSource < n-1 && nums[idxSource] == nums[idxSource+1]) {
                 s1[idxS1++] = nums[idxSource++];
                 s2[idxS2++] = nums[idxSource++];
+                continue;
+            }
+            if(idxS1 <= idxS2) {
+                s1[idxS1++] = nums[idxSource++];
             } else {
-                if(idxS1 <= idxS2) {
-
-                    s1[idxS1++] = nums[idxSource++];
-                } else {
-
-                    s2[idxS2++] = nums[idxSource++];
-                }
+                s2[idxS2++] = nums[idxSource++];
             }
         }
         return true;
