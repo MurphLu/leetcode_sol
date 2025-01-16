@@ -1,11 +1,11 @@
 package org.ml.leetcode.daily;
 
+import java.util.Arrays;
+
 public class MyAtoi {
     public static void main(String[] args) {
-        String maxString = String.valueOf(Long.MAX_VALUE);
-        String minString = String.valueOf(Long.MIN_VALUE);
-        System.out.println(maxString);
-        System.out.println(minString);
+        System.out.println(Arrays.toString(new MyAtoi().findRange(new int[]{1,2,2,2,2,2,2}, 2)));
+
     }
     public int myAtoi(String str) {
         String maxString = String.valueOf(Integer.MAX_VALUE);
@@ -56,5 +56,37 @@ public class MyAtoi {
             res = res * 10 + sbc - '0';
         }
         return isNag ? -res : res;
+    }
+
+
+
+
+    public int[] findRange(int[] nums, int val) {
+        int left = findLeft(nums, val, 0, nums.length);
+        int right = findRight(nums, val, 0, nums.length);
+        return new int[]{left, right};
+    }
+
+    private int findLeft(int[] nums, int val, int left, int right) {
+        if (left == right) {
+            return left;
+        }
+        int mid = left + (right - left) / 2;
+        if (nums[mid] < val) {
+            return findLeft(nums, val, mid+1, right);
+        } else {
+            return findLeft(nums, val, left, mid);
+        }
+    }
+    private int findRight(int[] nums, int val, int left, int right) {
+        if (left == right || left == right-1) {
+            return left;
+        }
+        int mid = left + (right - left) / 2;
+        if (nums[mid] <= val) {
+            return findRight(nums,val, mid, right);
+        } else {
+            return findRight(nums, val, left, mid);
+        }
     }
 }
